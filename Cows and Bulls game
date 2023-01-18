@@ -1,0 +1,58 @@
+import random
+numbers = random.sample(range(1, 10), 4)
+
+bulls = 0
+cows = 0
+guessed = False
+tries = int(input('Enter number of tries: '))
+
+for _ in range(tries):
+    user_guess = int(input("Enter your guess: "))
+
+    if user_guess < 1000 or user_guess > 9999:
+        print("Enter 4 digit number only. Try again.")
+        continue
+
+    first_digit = int(str(user_guess)[0])
+    second_digit = int(str(user_guess)[1])
+    third_digit = int(str(user_guess)[-2])
+    last_digit = int(str(user_guess)[-1])
+    if first_digit == second_digit or first_digit == third_digit or first_digit == last_digit:
+        print("Number should not have repeated digits. Try again.")
+        continue
+    if first_digit == numbers[0]:
+        bulls += 1
+    if second_digit == numbers[1]:
+        bulls += 1
+    if third_digit == numbers[2]:
+        bulls += 1
+    if last_digit == numbers[3]:
+        bulls += 1
+    if first_digit in numbers and first_digit != numbers[0]:
+        cows += 1
+    if second_digit in numbers and second_digit != numbers[1]:
+        cows += 1
+    if third_digit in numbers and third_digit != numbers[2]:
+        cows += 1
+    if last_digit in numbers and last_digit != numbers[3]:
+        cows += 1
+
+    if bulls == 4:
+        print("You guessed right!")
+        guessed = True
+        break
+    if bulls == 1:
+        if cows == 1:
+            print(f"{bulls} bull, {cows} cow")
+        else:
+            print(f"{bulls} bull, {cows} cows")
+    elif cows == 1 and bulls != 1:
+        print(f"{bulls} bulls, {cows} cow")
+    else:
+        print(f"{bulls} bulls, {cows} cows")
+
+    bulls = 0
+    cows = 0
+    
+if not guessed:
+    print(f"you ran out of tries. Number was {numbers[0]}{numbers[1]}{numbers[2]}{numbers[3]}")
